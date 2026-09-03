@@ -13,17 +13,19 @@ CREATE DATABASE IF NOT EXISTS florence_art
 USE florence_art;
 
 -- ---------------------------------------------------------------------
--- Usuarios del sistema (base para control de acceso futuro)
+-- Usuarios del sistema
 -- ---------------------------------------------------------------------
 CREATE TABLE users (
-    id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name          VARCHAR(120)  NOT NULL,
-    email         VARCHAR(150)  NOT NULL UNIQUE,
-    password_hash VARCHAR(255)  NOT NULL,
-    role          ENUM('admin','operador') NOT NULL DEFAULT 'operador',
-    is_active     TINYINT(1)    NOT NULL DEFAULT 1,
-    created_at    TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at    TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name            VARCHAR(120)  NOT NULL,
+    email           VARCHAR(150)  NOT NULL UNIQUE,
+    password_hash   VARCHAR(255)  NOT NULL,
+    role            ENUM('admin','operador') NOT NULL DEFAULT 'operador',
+    is_active       TINYINT(1)    NOT NULL DEFAULT 1,
+    failed_attempts TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    locked_until    TIMESTAMP NULL DEFAULT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------

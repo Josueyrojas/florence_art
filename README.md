@@ -197,6 +197,33 @@ estados. No requiere PHPUnit ni Composer.
 - Páginas de error propias (404 y 500); en producción el 500 nunca expone
   detalles técnicos, solo se registra en el log del servidor.
 - Respaldo de base de datos y suite de pruebas de integración (ver arriba).
+- **Seguridad de sesión y acceso**: cookies de sesión `HttpOnly` + `SameSite=Lax`,
+  y `Secure` automático en cuanto detecta que la petición llega por HTTPS
+  (no requiere configuración manual al desplegar). Bloqueo temporal de cuenta
+  (15 minutos) tras 5 intentos fallidos de inicio de sesión seguidos, para
+  frenar ataques de fuerza bruta. Cabeceras HTTP de seguridad
+  (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) y listado
+  de directorios deshabilitado en `public/.htaccess`; un `.htaccess` extra en
+  la raíz del proyecto bloquea el acceso por completo si algún hosting
+  llegara a apuntar el `DocumentRoot` ahí en vez de a `/public`.
+
+## Checklist antes de salir a producción
+
+Lo que **no** depende del hosting ya está resuelto (ver arriba). Lo que sí
+depende de dónde y cómo se despliegue:
+
+- [ ] `.env` en el servidor con credenciales reales de MySQL y `APP_ENV=production`
+      (con `local` se muestran errores técnicos crudos; con `production` no).
+- [ ] Cambiar la contraseña del usuario administrador de prueba.
+- [ ] HTTPS activo en el dominio (la app ya se adapta sola, pero el
+      certificado hay que activarlo del lado del hosting).
+- [ ] Confirmar que el `DocumentRoot` apunta a `/public`, no a la raíz del proyecto.
+- [ ] Permisos de escritura para el usuario del servidor web en
+      `public/uploads/projects/` y `public/assets/img/`.
+- [ ] Programar `bin/backup_db.php` (cron o Programador de tareas). Si el
+      hosting deshabilita `proc_open`/`mysqldump`, respaldar desde otra
+      máquina conectándose a la base remota, o usar la herramienta de
+      respaldos del propio panel de hosting (cPanel, etc.).
 
 ## Próximos pasos sugeridos
 

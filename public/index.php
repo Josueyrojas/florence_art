@@ -3,6 +3,20 @@
 require_once __DIR__ . '/../app/Core/helpers.php';
 require_once __DIR__ . '/../config/config.php';
 
+// Cookie de sesión segura: httpOnly siempre, secure automático si la
+// petición llega por HTTPS (detecta también proxys/balanceadores comunes
+// que reenvían el protocolo original vía X-Forwarded-Proto).
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || ($_SERVER['SERVER_PORT'] ?? null) == 443
+    || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path'     => '/',
+    'secure'   => $isHttps,
+    'httponly' => true,
+    'samesite' => 'Lax',
+]);
 session_start();
 
 spl_autoload_register(function (string $class): void {

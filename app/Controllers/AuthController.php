@@ -19,12 +19,23 @@ class AuthController extends Controller
         $email = trim((string) $this->input('email', ''));
         $password = (string) $this->input('password', '');
 
-        $user = (new User())->findByEmail($email);
+        $userModel = new User();
+        $user = $userModel->findByEmail($email);
+
+        if ($user && $userModel->isLocked($user)) {
+            flash('error', 'Esta cuenta está bloqueada temporalmente por varios intentos fallidos. Intenta de nuevo en unos minutos.');
+            $this->redirect('login');
+        }
 
         if (!$user || !$user['is_active'] || !password_verify($password, $user['password_hash'])) {
+            if ($user) {
+                $userModel->registerFailedAttempt($user['id']);
+            }
             flash('error', 'Correo o contraseña incorrectos.');
             $this->redirect('login');
         }
+
+        $userModel->resetFailedAttempts($user['id']);
 
         session_regenerate_id(true);
         $_SESSION['user_id'] = $user['id'];
