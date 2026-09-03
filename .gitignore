@@ -1,0 +1,8 @@
+/.env
+/public/uploads/projects/*
+!/public/uploads/projects/.gitkeep
+.vscode/
+.idea/
+*.log
+/node_modules/
+/backups/*.sql
