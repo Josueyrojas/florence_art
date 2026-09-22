@@ -11,11 +11,18 @@ require_once __DIR__ . '/../app/Core/helpers.php';
 require_once __DIR__ . '/../config/config.php';
 
 // Cookie de sesión segura: httpOnly siempre, secure automático si la
-// petición llega por HTTPS (detecta también proxys/balanceadores comunes
-// que reenvían el protocolo original vía X-Forwarded-Proto).
+// petición llega por HTTPS. El header X-Forwarded-Proto solo se confía si
+// el hosting lo declara explícitamente en .env (TRUST_PROXY_HTTPS=true) —
+// algunos hostings gratuitos ponen una capa intermedia delante que manda
+// ese header como "https" aunque el sitio real sea http, lo que marcaría
+// la cookie como "solo HTTPS" y el navegador nunca la reenviaría, rompiendo
+// el login por completo.
 $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-    || ($_SERVER['SERVER_PORT'] ?? null) == 443
-    || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+    || ($_SERVER['SERVER_PORT'] ?? null) == 443;
+
+if (env('TRUST_PROXY_HTTPS', 'false') === 'true') {
+    $isHttps = $isHttps || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+}
 
 session_set_cookie_params([
     'lifetime' => 0,

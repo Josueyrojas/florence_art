@@ -4,15 +4,17 @@
     <?= csrf_field() ?>
 
     <div>
-        <label class="block text-[11px] uppercase mb-2" style="color: #a3895a; letter-spacing: 0.2em;">Correo</label>
-        <input type="email" name="email" required autofocus
+        <label for="email" class="block text-[11px] uppercase mb-2" style="color: #a3895a; letter-spacing: 0.2em;">Correo</label>
+        <input type="email" name="email" id="email" required autofocus
+               autocomplete="username" inputmode="email" autocapitalize="none" autocorrect="off"
                class="w-full rounded-lg px-4 py-2.5 text-sm focus:outline-none transition"
                style="background: #0a0807; border: 1px solid #362c22; color: #ecdfc0;"
                onfocus="this.style.borderColor='#caa657'" onblur="this.style.borderColor='#362c22'">
     </div>
     <div>
-        <label class="block text-[11px] uppercase mb-2" style="color: #a3895a; letter-spacing: 0.2em;">Contraseña</label>
-        <input type="password" name="password" required
+        <label for="password" class="block text-[11px] uppercase mb-2" style="color: #a3895a; letter-spacing: 0.2em;">Contraseña</label>
+        <input type="password" name="password" id="password" required
+               autocomplete="current-password" enterkeyhint="go"
                class="w-full rounded-lg px-4 py-2.5 text-sm focus:outline-none transition"
                style="background: #0a0807; border: 1px solid #362c22; color: #ecdfc0;"
                onfocus="this.style.borderColor='#caa657'" onblur="this.style.borderColor='#362c22'">

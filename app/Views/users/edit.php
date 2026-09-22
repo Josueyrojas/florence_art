@@ -9,11 +9,11 @@
     </div>
     <div>
         <label class="block text-sm font-medium text-stone-600 mb-1">Correo *</label>
-        <input type="email" name="email" required value="<?= e($user['email']) ?>" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm">
+        <input type="email" name="email" required value="<?= e($user['email']) ?>" autocomplete="off" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm">
     </div>
     <div>
         <label class="block text-sm font-medium text-stone-600 mb-1">Nueva contraseña</label>
-        <input type="password" name="password" minlength="8" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm">
+        <input type="password" name="password" minlength="8" autocomplete="new-password" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm">
         <p class="text-xs text-stone-400 mt-1">Déjalo en blanco para mantener la contraseña actual. Si la cambias, mínimo 8 caracteres.</p>
     </div>
     <div>
