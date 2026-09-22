@@ -138,9 +138,12 @@ Hay dos roles (columna `users.role`): **admin** y **operador**.
   operador ni siquiera ve el botón "Eliminar" en la interfaz, y si intentara
   forzar la petición, el backend la rechaza con 403.
 
-Para dar de alta un operador: `php bin/create_admin.php "Nombre" correo pass`
-y luego `UPDATE users SET role = 'operador' WHERE email = '...'` (no hay
-pantalla de gestión de usuarios todavía, ver "Próximos pasos").
+Para dar de alta o editar usuarios ya no hace falta línea de comandos ni SQL:
+cualquier admin puede hacerlo desde **Usuarios** en el menú lateral
+(`/users`), incluyendo cambiar el rol, desactivar una cuenta o resetear la
+contraseña. `bin/create_admin.php` sigue disponible para crear el primer
+admin cuando la base de datos está vacía (necesario porque, hasta ese
+momento, nadie puede iniciar sesión para usar la pantalla).
 
 ## Respaldos de la base de datos
 
@@ -167,10 +170,12 @@ estados. No requiere PHPUnit ni Composer.
 
 ## Qué ya funciona
 
-- **Autenticación y roles**: login/logout con sesión, todas las rutas
-  protegidas salvo `/login`. Rol `admin` vs `operador` (ver arriba). Alta de
-  usuarios por línea de comandos (`bin/create_admin.php`); no hay pantalla de
-  registro pública (correcto para una herramienta interna).
+- **Autenticación, roles y usuarios**: login/logout con sesión, todas las
+  rutas protegidas salvo `/login`. Rol `admin` vs `operador` (ver arriba).
+  Pantalla de gestión de usuarios (`/users`, solo admin) para crear, editar,
+  cambiar rol/contraseña y desactivar cuentas — con protecciones para no
+  poder eliminar tu propia cuenta ni dejar el sistema sin administradores.
+  No hay pantalla de registro pública (correcto para una herramienta interna).
 - **Dashboard**: los 4 indicadores clave (proyectos activos, por cobrar, por
   pagar a proveedores, utilidad neta del mes), gráfica de ingresos vs. gastos
   de los últimos 6 meses (Chart.js), y paneles de alerta para entregas
@@ -227,8 +232,6 @@ depende de dónde y cómo se despliegue:
 
 ## Próximos pasos sugeridos
 
-- Pantalla de gestión de usuarios (alta/edición/cambio de rol desde la UI,
-  hoy solo por línea de comandos y SQL directo).
 - Editar el archivo de un registro de galería (hoy solo se puede eliminar y
   volver a subir).
 - Exportar a Excel real (.xlsx) en vez de CSV, si se necesita formato con

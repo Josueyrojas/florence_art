@@ -3,6 +3,13 @@
 -- Motor recomendado: MySQL 8.0+ / MariaDB 10.4+
 -- =====================================================================
 
+-- En hosting compartido/gratuito (InfinityFree y similares) la cuenta ya
+-- trae una base de datos creada con su propio nombre (algo como
+-- if0_XXXXXXX_nombre) y normalmente NO tiene permiso para crear otra.
+-- En ese caso, antes de importar por phpMyAdmin, borra o comenta las
+-- siguientes 2 sentencias (CREATE DATABASE / USE) — phpMyAdmin ya
+-- ejecuta el resto del script sobre la base que tengas seleccionada.
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

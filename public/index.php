@@ -52,6 +52,7 @@ use App\Controllers\SupplierController;
 use App\Controllers\SupplierPaymentController;
 use App\Controllers\OperatingExpenseController;
 use App\Controllers\SettingsController;
+use App\Controllers\UserController;
 
 // --- Control de acceso ---------------------------------------------------
 // Toda la app requiere sesión iniciada, salvo la pantalla de login.
@@ -148,6 +149,14 @@ $router->get('settings', [SettingsController::class, 'index']);
 $router->post('settings', [SettingsController::class, 'update']);
 $router->post('settings/logo', [SettingsController::class, 'uploadLogo']);
 $router->post('settings/logo/delete', [SettingsController::class, 'removeLogo']);
+
+// Usuarios (solo admin)
+$router->get('users', [UserController::class, 'index']);
+$router->get('users/create', [UserController::class, 'create']);
+$router->post('users', [UserController::class, 'store']);
+$router->get('users/{id}/edit', [UserController::class, 'edit']);
+$router->post('users/{id}/update', [UserController::class, 'update']);
+$router->post('users/{id}/delete', [UserController::class, 'destroy']);
 
 try {
     $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

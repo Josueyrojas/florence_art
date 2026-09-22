@@ -49,4 +49,56 @@ class User extends Model
     {
         $this->db->prepare('UPDATE users SET failed_attempts = 0, locked_until = NULL WHERE id = ?')->execute([$id]);
     }
+
+    public function all(): array
+    {
+        return $this->db->query('SELECT * FROM users ORDER BY name ASC')->fetchAll();
+    }
+
+    public function countActiveAdmins(): int
+    {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM users WHERE role = 'admin' AND is_active = 1");
+        return (int) $stmt->fetchColumn();
+    }
+
+    public function create(array $data): int
+    {
+        $stmt = $this->db->prepare(
+            'INSERT INTO users (name, email, password_hash, role, is_active) VALUES (?, ?, ?, ?, ?)'
+        );
+        $stmt->execute([
+            $data['name'],
+            $data['email'],
+            password_hash($data['password'], PASSWORD_DEFAULT),
+            $data['role'] ?? 'operador',
+            !empty($data['is_active']) ? 1 : 0,
+        ]);
+        return (int) $this->db->lastInsertId();
+    }
+
+    public function update(int $id, array $data): bool
+    {
+        $stmt = $this->db->prepare(
+            'UPDATE users SET name = ?, email = ?, role = ?, is_active = ? WHERE id = ?'
+        );
+        return $stmt->execute([
+            $data['name'],
+            $data['email'],
+            $data['role'],
+            !empty($data['is_active']) ? 1 : 0,
+            $id,
+        ]);
+    }
+
+    public function updatePassword(int $id, string $password): bool
+    {
+        $stmt = $this->db->prepare('UPDATE users SET password_hash = ? WHERE id = ?');
+        return $stmt->execute([password_hash($password, PASSWORD_DEFAULT), $id]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db->prepare('DELETE FROM users WHERE id = ?');
+        return $stmt->execute([$id]);
+    }
 }

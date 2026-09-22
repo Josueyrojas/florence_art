@@ -46,6 +46,7 @@
                 ['Gastos operativos', 'operating-expenses', 'operating-expenses'],
             ];
             if (isAdmin()) {
+                $nav[] = ['Usuarios', 'users', 'users'];
                 $nav[] = ['Configuración', 'settings', 'settings'];
             }
             $current = trim((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
