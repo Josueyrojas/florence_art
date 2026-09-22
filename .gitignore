@@ -6,3 +6,4 @@
 *.log
 /node_modules/
 /backups/*.sql
+/storage/sessions/

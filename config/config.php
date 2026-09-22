@@ -1,5 +1,10 @@
 <?php
 
+// Raíz del proyecto: siempre el padre de esta carpeta (config/), sin
+// importar si app/config viven junto a public/ (deploy normal) o todos
+// dentro de un htdocs fijo (hostings que no dejan mover el document root).
+define('PROJECT_ROOT', dirname(__DIR__));
+
 require_once __DIR__ . '/env.php';
 
 loadEnv(__DIR__ . '/../.env');

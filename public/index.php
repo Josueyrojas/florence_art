@@ -10,6 +10,24 @@ define('PUBLIC_PATH', __DIR__);
 require_once __DIR__ . '/../app/Core/helpers.php';
 require_once __DIR__ . '/../config/config.php';
 
+// Algunos hostings compartidos/gratuitos restringen o no comparten la ruta
+// de sesiones por defecto de PHP entre peticiones, lo que hace que la
+// sesión (y por lo tanto el token CSRF) se pierda silenciosamente entre el
+// GET que pinta el formulario y el POST que lo envía. Usamos una carpeta
+// propia, dentro del proyecto, para no depender de esa configuración.
+$sessionPath = PROJECT_ROOT . '/storage/sessions';
+if (!is_dir($sessionPath)) {
+    mkdir($sessionPath, 0755, true);
+}
+session_save_path($sessionPath);
+
+// Que ninguna capa intermedia (proxy/CDN/anti-bot) cachee páginas con
+// estado de sesión — si cachea el login con un token CSRF viejo, todos los
+// intentos de inicio de sesión fallarían con "Token CSRF inválido" aunque
+// la sesión real funcione bien.
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+
 // Cookie de sesión segura: httpOnly siempre, secure automático si la
 // petición llega por HTTPS. El header X-Forwarded-Proto solo se confía si
 // el hosting lo declara explícitamente en .env (TRUST_PROXY_HTTPS=true) —
