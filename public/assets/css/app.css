@@ -5,3 +5,70 @@
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
+
+/* ------------------------------------------------------------------ */
+/* Curvas de easing reutilizables (emil-design-eng)                    */
+/* ------------------------------------------------------------------ */
+:root {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Línea base para que se sienta nativo en móvil (skill mobile-native) */
+/* ------------------------------------------------------------------ */
+html {
+    -webkit-tap-highlight-color: transparent; /* sin flash gris/azul al tocar */
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior: none; /* el pull-to-refresh no debe robarle el scroll a la app */
+}
+
+button, a, [role="button"] {
+    touch-action: manipulation; /* sin delay de 300ms al tocar */
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* iOS hace zoom al enfocar un input con fuente < 16px; en escritorio dejamos
+   el tamaño que ya define Tailwind (text-sm) porque ahí no hay zoom. */
+@media (pointer: coarse) {
+    input, textarea, select {
+        font-size: 16px !important;
+    }
+}
+
+/* ------------------------------------------------------------------ */
+/* Micro-interacciones (skill emil-design-eng): feedback al presionar, */
+/* transiciones suaves en vez de saltos instantáneos de color.         */
+/* ------------------------------------------------------------------ */
+button, a {
+    transition: background-color 150ms ease, border-color 150ms ease,
+                color 150ms ease, opacity 150ms ease,
+                transform 120ms var(--ease-out);
+}
+
+button:not(:disabled):active {
+    transform: scale(0.97);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+tr {
+    transition: background-color 150ms ease;
+}
+
+/* ------------------------------------------------------------------ */
+/* Aparición suave de los mensajes flash (éxito/error)                 */
+/* ------------------------------------------------------------------ */
+@keyframes flash-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.flash-message {
+    animation: flash-in 300ms var(--ease-out);
+}

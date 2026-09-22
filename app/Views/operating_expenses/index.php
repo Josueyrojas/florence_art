@@ -11,7 +11,7 @@
         <option value="otro">Otro</option>
     </select>
     <input type="text" name="description" placeholder="Descripción" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm sm:col-span-2">
-    <input type="number" step="0.01" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
+    <input type="number" step="0.01" inputmode="decimal" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
     <input type="date" name="expense_date" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
     <label class="flex items-center gap-2 text-sm text-stone-600">
         <input type="checkbox" name="is_recurring" value="1"> Recurrente

@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0a09">
 <title>Iniciar sesión — <?= e($settings['business_name']) ?></title>
 <link rel="icon" href="<?= !empty($settings['logo_path']) ? url($settings['logo_path']) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%230a0808'/%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23caa657' stroke-width='1.5'/%3E%3Ctext x='50' y='66' font-size='46' font-family='Georgia,serif' fill='%23caa657' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E" ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,10 +40,10 @@
     </div>
 
     <?php if ($msg = flash('success')): ?>
-        <div class="mb-4 rounded-lg px-4 py-3 text-sm" style="background: rgba(34,120,80,0.12); border: 1px solid rgba(34,120,80,0.35); color: #8fd3ae;"><?= e($msg) ?></div>
+        <div class="flash-message mb-4 rounded-lg px-4 py-3 text-sm" style="background: rgba(34,120,80,0.12); border: 1px solid rgba(34,120,80,0.35); color: #8fd3ae;"><?= e($msg) ?></div>
     <?php endif; ?>
     <?php if ($msg = flash('error')): ?>
-        <div class="mb-4 rounded-lg px-4 py-3 text-sm" style="background: rgba(139,29,45,0.15); border: 1px solid rgba(139,29,45,0.4); color: #e2a3ac;"><?= e($msg) ?></div>
+        <div class="flash-message mb-4 rounded-lg px-4 py-3 text-sm" style="background: rgba(139,29,45,0.15); border: 1px solid rgba(139,29,45,0.4); color: #e2a3ac;"><?= e($msg) ?></div>
     <?php endif; ?>
 
     <?= $content ?>

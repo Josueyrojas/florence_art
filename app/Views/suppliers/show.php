@@ -9,7 +9,7 @@
 <form method="POST" action="<?= url('supplier-payments') ?>" class="bg-white rounded-xl border border-stone-200 p-4 mb-6 grid grid-cols-1 sm:grid-cols-5 gap-3">
     <?= csrf_field() ?>
     <input type="hidden" name="supplier_id" value="<?= $supplier['id'] ?>">
-    <input type="number" step="0.01" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
+    <input type="number" step="0.01" inputmode="decimal" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
     <input type="date" name="payment_date" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
     <select name="payment_method" class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
         <option value="efectivo">Efectivo</option>

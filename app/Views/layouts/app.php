@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
 <title><?= e($settings['business_name']) ?> — Control Financiero</title>
 <link rel="icon" href="<?= !empty($settings['logo_path']) ? url($settings['logo_path']) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23d97706'/%3E%3Ctext x='50' y='71' font-size='58' font-family='Georgia,serif' fill='white' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E" ?>">
 <link rel="stylesheet" href="<?= asset('css/tailwind.css') ?>">
@@ -14,7 +15,8 @@
 <div class="flex min-h-screen">
     <!-- Sidebar -->
     <aside
-        class="fixed inset-y-0 left-0 z-30 w-64 bg-stone-900 text-stone-100 transform transition-transform duration-200 md:translate-x-0 md:static md:inset-auto flex flex-col"
+        class="fixed inset-y-0 left-0 z-30 w-64 bg-stone-900 text-stone-100 transform md:translate-x-0 md:static md:inset-auto flex flex-col"
+        style="transition: transform 280ms var(--ease-drawer); padding-top: env(safe-area-inset-top);"
         :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
     >
         <div class="px-6 py-5 border-b border-stone-700 flex items-center gap-3">
@@ -69,7 +71,8 @@
 
     <div class="flex-1 md:ml-0">
         <!-- Topbar -->
-        <header class="sticky top-0 z-20 flex items-center justify-between bg-white border-b border-stone-200 px-4 py-3 md:px-8">
+        <header class="sticky top-0 z-20 flex items-center justify-between bg-white border-b border-stone-200 px-4 py-3 md:px-8"
+                style="padding-top: calc(0.75rem + env(safe-area-inset-top));">
             <button class="md:hidden text-stone-600" @click="sidebarOpen = !sidebarOpen">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -80,12 +83,12 @@
 
         <main class="p-4 md:p-8 max-w-6xl mx-auto">
             <?php if ($msg = flash('success')): ?>
-                <div class="mb-4 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 text-sm">
+                <div class="flash-message mb-4 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 text-sm">
                     <?= e($msg) ?>
                 </div>
             <?php endif; ?>
             <?php if ($msg = flash('error')): ?>
-                <div class="mb-4 rounded-lg bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
+                <div class="flash-message mb-4 rounded-lg bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
                     <?= e($msg) ?>
                 </div>
             <?php endif; ?>

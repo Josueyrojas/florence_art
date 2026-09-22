@@ -49,11 +49,11 @@
     </div>
 
     <!-- Abonos -->
-    <div x-show="tab === 'abonos'">
+    <div x-show="tab === 'abonos'" x-transition.opacity.duration.150ms>
         <form method="POST" action="<?= url('payments') ?>" class="bg-white rounded-xl border border-stone-200 p-4 mb-4 grid grid-cols-1 sm:grid-cols-5 gap-3">
             <?= csrf_field() ?>
             <input type="hidden" name="project_id" value="<?= $project['id'] ?>">
-            <input type="number" step="0.01" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
+            <input type="number" step="0.01" inputmode="decimal" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
             <input type="date" name="payment_date" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
             <select name="payment_method" class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
                 <option value="efectivo">Efectivo</option>
@@ -97,12 +97,12 @@
     </div>
 
     <!-- Gastos -->
-    <div x-show="tab === 'gastos'" x-cloak>
+    <div x-show="tab === 'gastos'" x-cloak x-transition.opacity.duration.150ms>
         <form method="POST" action="<?= url('expenses') ?>" class="bg-white rounded-xl border border-stone-200 p-4 mb-4 grid grid-cols-1 sm:grid-cols-6 gap-3">
             <?= csrf_field() ?>
             <input type="hidden" name="project_id" value="<?= $project['id'] ?>">
             <input type="text" name="description" placeholder="Descripción" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm sm:col-span-2">
-            <input type="number" step="0.01" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
+            <input type="number" step="0.01" inputmode="decimal" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
             <input type="date" name="expense_date" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
             <select name="supplier_id" class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
                 <option value="">Sin proveedor</option>
@@ -152,7 +152,7 @@
     </div>
 
     <!-- Mano de obra -->
-    <div x-show="tab === 'mano_obra'" x-cloak>
+    <div x-show="tab === 'mano_obra'" x-cloak x-transition.opacity.duration.150ms>
         <form method="POST" action="<?= url('labor') ?>" class="bg-white rounded-xl border border-stone-200 p-4 mb-4 grid grid-cols-1 sm:grid-cols-6 gap-3">
             <?= csrf_field() ?>
             <input type="hidden" name="project_id" value="<?= $project['id'] ?>">
@@ -162,7 +162,7 @@
                 <option value="externo">Externo</option>
             </select>
             <input type="text" name="description" placeholder="Descripción" class="rounded-lg border border-stone-300 px-3 py-2 text-sm sm:col-span-2">
-            <input type="number" step="0.01" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
+            <input type="number" step="0.01" inputmode="decimal" name="amount" placeholder="Monto" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
             <input type="date" name="labor_date" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
             <button class="bg-amber-600 hover:bg-amber-700 text-white text-sm rounded-lg px-4 py-2 sm:col-span-6 sm:w-max">Registrar mano de obra</button>
         </form>
@@ -198,12 +198,12 @@
     </div>
 
     <!-- Modificaciones / extras -->
-    <div x-show="tab === 'extras'" x-cloak>
+    <div x-show="tab === 'extras'" x-cloak x-transition.opacity.duration.150ms>
         <form method="POST" action="<?= url('project-extras') ?>" class="bg-white rounded-xl border border-stone-200 p-4 mb-4 grid grid-cols-1 sm:grid-cols-4 gap-3">
             <?= csrf_field() ?>
             <input type="hidden" name="project_id" value="<?= $project['id'] ?>">
             <input type="text" name="description" placeholder="Descripción del cambio" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm sm:col-span-2">
-            <input type="number" step="0.01" name="amount" placeholder="Monto (+/-)" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
+            <input type="number" step="0.01" inputmode="decimal" name="amount" placeholder="Monto (+/-)" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
             <input type="date" name="extra_date" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
             <button class="bg-amber-600 hover:bg-amber-700 text-white text-sm rounded-lg px-4 py-2 sm:col-span-4 sm:w-max">Registrar modificación</button>
         </form>
@@ -239,7 +239,7 @@
     </div>
 
     <!-- Galería -->
-    <div x-show="tab === 'galeria'" x-cloak>
+    <div x-show="tab === 'galeria'" x-cloak x-transition.opacity.duration.150ms>
         <form method="POST" action="<?= url('project-media') ?>" enctype="multipart/form-data" class="bg-white rounded-xl border border-stone-200 p-4 mb-4 grid grid-cols-1 sm:grid-cols-4 gap-3">
             <?= csrf_field() ?>
             <input type="hidden" name="project_id" value="<?= $project['id'] ?>">
@@ -276,7 +276,7 @@
     </div>
 
     <!-- Historial de estados -->
-    <div x-show="tab === 'historial'" x-cloak>
+    <div x-show="tab === 'historial'" x-cloak x-transition.opacity.duration.150ms>
         <div class="bg-white rounded-xl border border-stone-200 overflow-x-auto">
             <table class="w-full text-sm">
                 <thead><tr class="text-left text-stone-400 border-b border-stone-100">

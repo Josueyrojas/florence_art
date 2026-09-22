@@ -10,7 +10,7 @@
     </div>
     <div>
         <label class="block text-sm font-medium text-stone-600 mb-1">Monto (+/-) *</label>
-        <input type="number" step="0.01" name="amount" required value="<?= e((string) $extra['amount']) ?>" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm">
+        <input type="number" step="0.01" inputmode="decimal" name="amount" required value="<?= e((string) $extra['amount']) ?>" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm">
     </div>
     <div>
         <label class="block text-sm font-medium text-stone-600 mb-1">Fecha *</label>
