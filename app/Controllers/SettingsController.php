@@ -68,7 +68,7 @@ class SettingsController extends Controller
         $current = $model->current();
 
         $filename = 'logo_' . bin2hex(random_bytes(6)) . '.' . $extension;
-        $uploadDir = __DIR__ . '/../../public/assets/img/';
+        $uploadDir = PUBLIC_PATH . '/assets/img/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
@@ -77,7 +77,7 @@ class SettingsController extends Controller
 
         // Borra el logo anterior para no dejar archivos huérfanos.
         if (!empty($current['logo_path'])) {
-            $oldFile = __DIR__ . '/../../public/' . $current['logo_path'];
+            $oldFile = PUBLIC_PATH . '/' . $current['logo_path'];
             if (is_file($oldFile)) {
                 unlink($oldFile);
             }
@@ -98,7 +98,7 @@ class SettingsController extends Controller
         $current = $model->current();
 
         if (!empty($current['logo_path'])) {
-            $oldFile = __DIR__ . '/../../public/' . $current['logo_path'];
+            $oldFile = PUBLIC_PATH . '/' . $current['logo_path'];
             if (is_file($oldFile)) {
                 unlink($oldFile);
             }

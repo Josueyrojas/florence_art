@@ -1,5 +1,12 @@
 <?php
 
+// Carpeta pública real (donde vive este index.php). Los controladores la usan
+// para ubicar /uploads y /assets sin depender de cuántos niveles arriba estén
+// app/ y config/ — así el mismo código sirve tanto si public/ es hermana de
+// app/ (deploy normal) como si todo vive junto dentro de un htdocs fijo
+// (hostings que no permiten mover el document root, como InfinityFree).
+define('PUBLIC_PATH', __DIR__);
+
 require_once __DIR__ . '/../app/Core/helpers.php';
 require_once __DIR__ . '/../config/config.php';
 

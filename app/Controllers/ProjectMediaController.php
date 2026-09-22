@@ -40,7 +40,7 @@ class ProjectMediaController extends Controller
         };
 
         $filename = 'project_' . $projectId . '_' . bin2hex(random_bytes(8)) . '.' . $extension;
-        $uploadDir = __DIR__ . '/../../public/uploads/projects/';
+        $uploadDir = PUBLIC_PATH . '/uploads/projects/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
