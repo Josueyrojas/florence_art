@@ -67,6 +67,9 @@
                     Cerrar sesión
                 </button>
             </form>
+            <a href="<?= url('privacidad') ?>" class="block px-3 pt-2 text-xs text-stone-500 hover:text-stone-300">
+                Aviso de Privacidad
+            </a>
         </div>
     </aside>
 

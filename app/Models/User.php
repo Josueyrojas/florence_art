@@ -101,4 +101,28 @@ class User extends Model
         $stmt = $this->db->prepare('DELETE FROM users WHERE id = ?');
         return $stmt->execute([$id]);
     }
+
+    /**
+     * Genera y guarda un nuevo token de sesión, invalidando cualquier otra
+     * sesión activa de este usuario (solo se permite una a la vez).
+     */
+    public function issueSessionToken(int $id): string
+    {
+        $token = bin2hex(random_bytes(32));
+        $this->db->prepare('UPDATE users SET current_session_token = ? WHERE id = ?')->execute([$token, $id]);
+        return $token;
+    }
+
+    public function clearSessionToken(int $id): void
+    {
+        $this->db->prepare('UPDATE users SET current_session_token = NULL WHERE id = ?')->execute([$id]);
+    }
+
+    public function hasValidSessionToken(int $id, string $token): bool
+    {
+        $stmt = $this->db->prepare('SELECT current_session_token FROM users WHERE id = ?');
+        $stmt->execute([$id]);
+        $stored = $stmt->fetchColumn();
+        return $stored !== false && $stored !== null && hash_equals((string) $stored, $token);
+    }
 }

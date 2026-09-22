@@ -12,6 +12,11 @@ class AuthController extends Controller
         $this->view('auth/login', [], 'layouts/guest');
     }
 
+    public function privacy(): void
+    {
+        $this->view('auth/privacy', [], 'layouts/guest');
+    }
+
     public function login(): void
     {
         $this->verifyCsrf();
@@ -41,6 +46,10 @@ class AuthController extends Controller
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
         $_SESSION['user_role'] = $user['role'];
+        // Solo se permite una sesión activa por usuario: entrar aquí invalida
+        // cualquier otra sesión abierta de esta cuenta en otro navegador/equipo.
+        $_SESSION['session_token'] = $userModel->issueSessionToken($user['id']);
+        $_SESSION['last_activity'] = time();
 
         $this->redirect('');
     }
@@ -48,6 +57,11 @@ class AuthController extends Controller
     public function logout(): void
     {
         $this->verifyCsrf();
+
+        if (!empty($_SESSION['user_id'])) {
+            (new User())->clearSessionToken((int) $_SESSION['user_id']);
+        }
+
         $_SESSION = [];
         session_destroy();
         header('Location: ' . url('login'));

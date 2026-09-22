@@ -19,7 +19,8 @@
 <body class="min-h-screen flex items-center justify-center p-4"
       style="background: radial-gradient(circle at 50% 15%, #1c1512 0%, #0d0a09 55%, #060505 100%);">
 
-<div class="w-full max-w-sm">
+<?php $isPrivacyPage = trim((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') === 'privacidad'; ?>
+<div class="w-full <?= $isPrivacyPage ? 'max-w-2xl' : 'max-w-sm' ?>">
     <div class="text-center mb-8">
         <div class="mx-auto mb-5 h-24 w-24 rounded-full flex items-center justify-center overflow-hidden"
              style="background: radial-gradient(circle at 35% 30%, #1e1712, #0a0807 75%); border: 1px solid rgba(202,166,87,0.45); box-shadow: 0 0 0 1px rgba(202,166,87,0.12), 0 8px 30px rgba(0,0,0,0.6), inset 0 0 20px rgba(202,166,87,0.05);">

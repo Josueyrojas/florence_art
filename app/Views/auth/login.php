@@ -25,4 +25,9 @@
             style="background: linear-gradient(135deg, #a97e46, #d8bd85, #a97e46); color: #1a1410;">
         Entrar
     </button>
+
+    <p class="text-center text-xs" style="color: #6b5c44;">
+        Al continuar aceptas nuestro
+        <a href="<?= url('privacidad') ?>" class="underline" style="color: #a3895a;">Aviso de Privacidad</a>.
+    </p>
 </form>

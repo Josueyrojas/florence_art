@@ -80,9 +80,37 @@ use App\Controllers\SettingsController;
 use App\Controllers\UserController;
 
 // --- Control de acceso ---------------------------------------------------
-// Toda la app requiere sesión iniciada, salvo la pantalla de login.
-$publicPaths = ['login'];
+// Toda la app requiere sesión iniciada, salvo el login y el aviso de privacidad.
+$publicPaths = ['login', 'privacidad'];
 $currentPath = trim((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+
+if (!empty($_SESSION['user_id'])) {
+    // Cierre por inactividad: protege equipos compartidos donde alguien deja
+    // la sesión abierta y se aleja.
+    $idleTimeoutSeconds = 30 * 60;
+    $idleExpired = !empty($_SESSION['last_activity'])
+        && (time() - $_SESSION['last_activity']) > $idleTimeoutSeconds;
+
+    // Una sola sesión activa por cuenta: si alguien inicia sesión con el
+    // mismo usuario en otro navegador/equipo, esta sesión deja de ser válida
+    // en cuanto el token guardado en la base de datos ya no coincide.
+    $tokenValid = !empty($_SESSION['session_token'])
+        && (new \App\Models\User())->hasValidSessionToken((int) $_SESSION['user_id'], $_SESSION['session_token']);
+
+    if ($idleExpired || !$tokenValid) {
+        $reason = $idleExpired
+            ? 'Tu sesión se cerró por inactividad.'
+            : 'Tu sesión se cerró porque se inició sesión con esta cuenta en otro navegador o dispositivo.';
+        $_SESSION = [];
+        session_destroy();
+        session_start();
+        flash('error', $reason);
+        header('Location: ' . url('login'));
+        exit;
+    }
+
+    $_SESSION['last_activity'] = time();
+}
 
 if (empty($_SESSION['user_id']) && !in_array($currentPath, $publicPaths, true)) {
     header('Location: ' . url('login'));
@@ -99,6 +127,7 @@ $router = new Router();
 $router->get('login', [AuthController::class, 'showLogin']);
 $router->post('login', [AuthController::class, 'login']);
 $router->post('logout', [AuthController::class, 'logout']);
+$router->get('privacidad', [AuthController::class, 'privacy']);
 
 // Dashboard
 $router->get('/', [DashboardController::class, 'index']);
