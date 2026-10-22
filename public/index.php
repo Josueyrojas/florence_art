@@ -72,6 +72,7 @@ use App\Controllers\PaymentController;
 use App\Controllers\ExpenseController;
 use App\Controllers\LaborController;
 use App\Controllers\ProjectExtraController;
+use App\Controllers\ProjectPieceController;
 use App\Controllers\ProjectMediaController;
 use App\Controllers\SupplierController;
 use App\Controllers\SupplierPaymentController;
@@ -176,6 +177,11 @@ $router->post('project-extras', [ProjectExtraController::class, 'store']);
 $router->get('project-extras/{id}/edit', [ProjectExtraController::class, 'edit']);
 $router->post('project-extras/{id}/update', [ProjectExtraController::class, 'update']);
 $router->post('project-extras/{id}/delete', [ProjectExtraController::class, 'destroy']);
+
+// Piezas del proyecto
+$router->post('project-pieces', [ProjectPieceController::class, 'store']);
+$router->post('project-pieces/{id}/status', [ProjectPieceController::class, 'updateStatus']);
+$router->post('project-pieces/{id}/delete', [ProjectPieceController::class, 'destroy']);
 
 // Galería / evidencias
 $router->post('project-media', [ProjectMediaController::class, 'store']);

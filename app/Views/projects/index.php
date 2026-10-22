@@ -22,6 +22,7 @@
     <table class="w-full text-sm">
         <thead>
             <tr class="text-left text-stone-400 border-b border-stone-100">
+                <th class="py-3 px-4"></th>
                 <th class="py-3 px-4">Proyecto</th>
                 <th class="py-3 px-4">Cliente</th>
                 <th class="py-3 px-4">Costo total</th>
@@ -32,6 +33,18 @@
         <tbody>
             <?php foreach ($projects as $p): ?>
                 <tr class="border-b border-stone-50 hover:bg-stone-50">
+                    <td class="py-2 px-4">
+                        <?php if (!empty($p['cover_photo'])): ?>
+                            <img src="<?= url($p['cover_photo']) ?>" alt="" class="h-10 w-10 rounded-lg object-cover border border-stone-200">
+                        <?php else: ?>
+                            <div class="h-10 w-10 rounded-lg bg-stone-100 flex items-center justify-center">
+                                <svg width="20" height="16" viewBox="0 0 48 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 16 Q5 8 11 8 Q11 4 17 4 Q17 8 24 8 Q24 4 31 4 Q31 8 37 8 Q43 8 43 16" stroke="#b45309" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M4 16 L44 16" stroke="#b45309" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                    </td>
                     <td class="py-3 px-4">
                         <a href="<?= url('projects/' . $p['id']) ?>" class="font-medium text-amber-700 hover:underline"><?= e($p['name']) ?></a>
                     </td>
@@ -44,7 +57,7 @@
                 </tr>
             <?php endforeach; ?>
             <?php if (!$projects): ?>
-                <tr><td colspan="5" class="py-6 text-center text-stone-400">No se encontraron proyectos.</td></tr>
+                <tr><td colspan="6" class="py-6 text-center text-stone-400">No se encontraron proyectos.</td></tr>
             <?php endif; ?>
         </tbody>
     </table>

@@ -71,6 +71,40 @@
 </div>
 <?php endif; ?>
 
+<?php if ($pendingByProject): ?>
+<div class="bg-white rounded-xl shadow-sm border border-stone-200 p-5 mb-8">
+    <h3 class="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-1">Pendientes por proyecto</h3>
+    <p class="text-xs text-stone-400 mb-4">Piezas sin terminar, ordenadas por fecha de entrega más próxima primero.</p>
+    <div class="space-y-4">
+        <?php foreach ($pendingByProject as $projectId => $group): ?>
+            <div class="border border-stone-100 rounded-lg p-3">
+                <div class="flex items-center justify-between mb-2">
+                    <a href="<?= url('projects/' . $projectId) ?>" class="text-sm font-medium text-amber-700 hover:underline">
+                        <?= e($group['project_name']) ?>
+                    </a>
+                    <span class="text-xs text-stone-400">
+                        <?= e($group['client_name']) ?>
+                        <?php if ($group['delivery_date']): ?>
+                            · entrega <?= e(date('d/m/Y', strtotime($group['delivery_date']))) ?>
+                        <?php endif; ?>
+                    </span>
+                </div>
+                <ul class="text-sm space-y-1">
+                    <?php foreach ($group['pieces'] as $piece): ?>
+                        <li class="flex items-center justify-between">
+                            <span class="text-stone-600"><?= (int) $piece['quantity'] ?>× <?= e($piece['description']) ?></span>
+                            <span class="px-2 py-0.5 rounded-full text-xs <?= $piece['status'] === 'en_proceso' ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-600' ?>">
+                                <?= $piece['status'] === 'en_proceso' ? 'En proceso' : 'Pendiente' ?>
+                            </span>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php endif; ?>
+
 <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-5">
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-sm font-semibold text-stone-500 uppercase tracking-wide">Proyectos recientes</h3>

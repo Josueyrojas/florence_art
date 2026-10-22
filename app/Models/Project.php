@@ -17,7 +17,13 @@ class Project extends Model
                 COALESCE(extras.total_extras, 0) AS total_extras,
                 COALESCE(pay.total_payments, 0) AS total_payments,
                 (p.agreed_cost + COALESCE(extras.total_extras, 0)) AS total_project_cost,
-                (p.agreed_cost + COALESCE(extras.total_extras, 0) - COALESCE(pay.total_payments, 0)) AS balance_due
+                (p.agreed_cost + COALESCE(extras.total_extras, 0) - COALESCE(pay.total_payments, 0)) AS balance_due,
+                (
+                    SELECT file_path FROM project_media pm
+                    WHERE pm.project_id = p.id
+                    ORDER BY (pm.media_type = 'foto') DESC, pm.uploaded_at DESC
+                    LIMIT 1
+                ) AS cover_photo
             FROM projects p
             INNER JOIN clients c ON c.id = p.client_id
             LEFT JOIN (

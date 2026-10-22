@@ -9,6 +9,7 @@ use App\Models\Expense;
 use App\Models\Labor;
 use App\Models\OperatingExpense;
 use App\Models\ProjectStatusHistory;
+use App\Models\ProjectPiece;
 
 class DashboardController extends Controller
 {
@@ -69,6 +70,16 @@ class DashboardController extends Controller
 
         $alertModel = new ProjectStatusHistory();
 
+        // Pendientes por proyecto (piezas sin terminar), agrupados para el
+        // panel de urgencia: el orden ya viene del más urgente al menos.
+        $pendingByProject = [];
+        foreach ((new ProjectPiece())->pendingAcrossProjects() as $row) {
+            $pendingByProject[$row['project_id']]['project_name'] = $row['project_name'];
+            $pendingByProject[$row['project_id']]['client_name'] = $row['client_name'];
+            $pendingByProject[$row['project_id']]['delivery_date'] = $row['delivery_date'];
+            $pendingByProject[$row['project_id']]['pieces'][] = $row;
+        }
+
         $this->view('dashboard/index', [
             'activeProjects'     => $activeProjects,
             'totalReceivable'    => $totalReceivable,
@@ -82,6 +93,7 @@ class DashboardController extends Controller
             'monthExpenses'      => $monthExpenses,
             'upcomingDeliveries' => $alertModel->upcomingDeliveries(7),
             'overdueBalances'    => $alertModel->overdueBalances(),
+            'pendingByProject'   => $pendingByProject,
         ]);
     }
 }

@@ -16,6 +16,7 @@
                 <th class="py-3 px-4">Nombre</th>
                 <th class="py-3 px-4">Teléfono</th>
                 <th class="py-3 px-4">Correo</th>
+                <th class="py-3 px-4">Cotizaciones próximas a cerrar</th>
                 <th class="py-3 px-4 text-right">Acciones</th>
             </tr>
         </thead>
@@ -27,6 +28,21 @@
                     </td>
                     <td class="py-3 px-4 text-stone-600"><?= e($c['phone']) ?></td>
                     <td class="py-3 px-4 text-stone-600"><?= e($c['email']) ?></td>
+                    <td class="py-3 px-4">
+                        <?php $quotes = $pendingQuotes[$c['id']] ?? []; ?>
+                        <?php if ($quotes): ?>
+                            <ul class="space-y-0.5">
+                                <?php foreach ($quotes as $q): ?>
+                                    <li>
+                                        <a href="<?= url('projects/' . $q['id']) ?>" class="text-amber-700 hover:underline"><?= e($q['name']) ?></a>
+                                        <span class="text-stone-400"> · <?= money($q['agreed_cost']) ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <span class="text-stone-300">—</span>
+                        <?php endif; ?>
+                    </td>
                     <td class="py-3 px-4">
                         <div class="flex justify-end gap-3 text-sm">
                             <a href="<?= url('clients/' . $c['id'] . '/edit') ?>" class="text-amber-700 hover:underline">Editar</a>
@@ -42,7 +58,7 @@
                 </tr>
             <?php endforeach; ?>
             <?php if (!$clients): ?>
-                <tr><td colspan="4" class="py-6 text-center text-stone-400">Sin clientes registrados.</td></tr>
+                <tr><td colspan="5" class="py-6 text-center text-stone-400">Sin clientes registrados.</td></tr>
             <?php endif; ?>
         </tbody>
     </table>

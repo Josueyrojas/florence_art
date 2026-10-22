@@ -137,6 +137,23 @@ CREATE TABLE project_extras (
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------
+-- Piezas del proyecto (desglose de lo que incluye: mesa, sillas, etc.)
+-- ---------------------------------------------------------------------
+CREATE TABLE project_pieces (
+    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    project_id  INT UNSIGNED NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    quantity    INT UNSIGNED NOT NULL DEFAULT 1,
+    status      ENUM('pendiente','en_proceso','terminada','entregada') NOT NULL DEFAULT 'pendiente',
+    notes       VARCHAR(255),
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_pieces_project FOREIGN KEY (project_id) REFERENCES projects(id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    INDEX idx_pieces_project (project_id)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
 -- Galería / evidencias del proyecto (bocetos, fotos, documentos)
 -- ---------------------------------------------------------------------
 CREATE TABLE project_media (

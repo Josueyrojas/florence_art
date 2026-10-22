@@ -89,4 +89,30 @@ class Client extends Model
         $stmt = $this->db->prepare('DELETE FROM clients WHERE id = ?');
         return $stmt->execute([$id]);
     }
+
+    /**
+     * Proyectos en estado "cotizado" (próximos a cerrar) de los clientes
+     * indicados, agrupados por client_id, para mostrarlos en el listado.
+     */
+    public function pendingQuotesByClient(array $clientIds): array
+    {
+        if (!$clientIds) {
+            return [];
+        }
+
+        $placeholders = implode(',', array_fill(0, count($clientIds), '?'));
+        $stmt = $this->db->prepare("
+            SELECT id, client_id, name, agreed_cost
+            FROM projects
+            WHERE status = 'cotizado' AND client_id IN ({$placeholders})
+            ORDER BY created_at DESC
+        ");
+        $stmt->execute($clientIds);
+
+        $byClient = [];
+        foreach ($stmt->fetchAll() as $row) {
+            $byClient[$row['client_id']][] = $row;
+        }
+        return $byClient;
+    }
 }

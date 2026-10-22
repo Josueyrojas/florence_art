@@ -12,6 +12,7 @@ use App\Models\Expense;
 use App\Models\Labor;
 use App\Models\Supplier;
 use App\Models\ProjectStatusHistory;
+use App\Models\ProjectPiece;
 
 class ProjectController extends Controller
 {
@@ -92,6 +93,7 @@ class ProjectController extends Controller
             'labor'         => (new Labor())->forProject($id),
             'suppliers'     => (new Supplier())->all(),
             'statusHistory' => (new ProjectStatusHistory())->forProject($id),
+            'pieces'        => (new ProjectPiece())->forProject($id),
         ]);
     }
 

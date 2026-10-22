@@ -36,9 +36,9 @@
     </div>
 </div>
 
-<div x-data="{ tab: 'abonos' }">
+<div x-data="{ tab: 'piezas' }">
     <div class="flex flex-wrap gap-2 border-b border-stone-200 mb-6">
-        <?php $tabs = ['abonos' => 'Abonos', 'gastos' => 'Gastos', 'mano_obra' => 'Mano de obra', 'extras' => 'Modificaciones', 'galeria' => 'Galería', 'historial' => 'Historial de estados']; ?>
+        <?php $tabs = ['piezas' => 'Piezas', 'abonos' => 'Abonos', 'gastos' => 'Gastos', 'mano_obra' => 'Mano de obra', 'extras' => 'Modificaciones', 'galeria' => 'Galería', 'historial' => 'Historial de estados']; ?>
         <?php foreach ($tabs as $key => $label): ?>
             <button @click="tab = '<?= $key ?>'"
                     :class="tab === '<?= $key ?>' ? 'border-amber-600 text-amber-700' : 'border-transparent text-stone-500 hover:text-stone-700'"
@@ -48,8 +48,64 @@
         <?php endforeach; ?>
     </div>
 
+    <!-- Piezas -->
+    <div x-show="tab === 'piezas'" x-transition.opacity.duration.150ms>
+        <form method="POST" action="<?= url('project-pieces') ?>" class="bg-white rounded-xl border border-stone-200 p-4 mb-4 grid grid-cols-1 sm:grid-cols-6 gap-3">
+            <?= csrf_field() ?>
+            <input type="hidden" name="project_id" value="<?= $project['id'] ?>">
+            <input type="text" name="description" placeholder="Descripción de la pieza (ej. Mesa de comedor)" required class="rounded-lg border border-stone-300 px-3 py-2 text-sm sm:col-span-3">
+            <input type="number" min="1" name="quantity" value="1" placeholder="Cantidad" class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
+            <select name="status" class="rounded-lg border border-stone-300 px-3 py-2 text-sm">
+                <option value="pendiente">Pendiente</option>
+                <option value="en_proceso">En proceso</option>
+                <option value="terminada">Terminada</option>
+                <option value="entregada">Entregada</option>
+            </select>
+            <button class="bg-amber-600 hover:bg-amber-700 text-white text-sm rounded-lg px-4 py-2">Agregar pieza</button>
+        </form>
+
+        <div class="bg-white rounded-xl border border-stone-200 overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead><tr class="text-left text-stone-400 border-b border-stone-100">
+                    <th class="py-2 px-4">Pieza</th><th class="py-2 px-4">Cant.</th><th class="py-2 px-4">Estado</th><th class="py-2 px-4"></th>
+                </tr></thead>
+                <tbody>
+                <?php foreach ($pieces as $piece): ?>
+                    <tr class="border-b border-stone-50">
+                        <td class="py-2 px-4"><?= e($piece['description']) ?></td>
+                        <td class="py-2 px-4"><?= (int) $piece['quantity'] ?></td>
+                        <td class="py-2 px-4">
+                            <form method="POST" action="<?= url('project-pieces/' . $piece['id'] . '/status') ?>">
+                                <?= csrf_field() ?>
+                                <input type="hidden" name="project_id" value="<?= $project['id'] ?>">
+                                <select name="status" onchange="this.form.submit()"
+                                        class="rounded-lg border border-stone-300 px-2 py-1 text-xs <?= $piece['status'] === 'entregada' ? 'text-emerald-600' : ($piece['status'] === 'pendiente' ? 'text-red-600' : 'text-stone-600') ?>">
+                                    <option value="pendiente" <?= $piece['status'] === 'pendiente' ? 'selected' : '' ?>>Pendiente</option>
+                                    <option value="en_proceso" <?= $piece['status'] === 'en_proceso' ? 'selected' : '' ?>>En proceso</option>
+                                    <option value="terminada" <?= $piece['status'] === 'terminada' ? 'selected' : '' ?>>Terminada</option>
+                                    <option value="entregada" <?= $piece['status'] === 'entregada' ? 'selected' : '' ?>>Entregada</option>
+                                </select>
+                            </form>
+                        </td>
+                        <td class="py-2 px-4 text-right">
+                            <?php if (isAdmin()): ?>
+                            <form method="POST" action="<?= url('project-pieces/' . $piece['id'] . '/delete') ?>" onsubmit="return confirm('¿Eliminar esta pieza?');">
+                                <?= csrf_field() ?>
+                                <input type="hidden" name="project_id" value="<?= $project['id'] ?>">
+                                <button type="submit" class="text-xs text-red-600 hover:underline">Eliminar</button>
+                            </form>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <?php if (!$pieces): ?><tr><td colspan="4" class="py-4 text-center text-stone-400">Sin piezas registradas todavía.</td></tr><?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- Abonos -->
-    <div x-show="tab === 'abonos'" x-transition.opacity.duration.150ms>
+    <div x-show="tab === 'abonos'" x-cloak x-transition.opacity.duration.150ms>
         <form method="POST" action="<?= url('payments') ?>" class="bg-white rounded-xl border border-stone-200 p-4 mb-4 grid grid-cols-1 sm:grid-cols-5 gap-3">
             <?= csrf_field() ?>
             <input type="hidden" name="project_id" value="<?= $project['id'] ?>">

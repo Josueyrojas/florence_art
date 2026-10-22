@@ -16,12 +16,15 @@ class ClientController extends Controller
         $search = trim((string) $this->input('search', ''));
         $page = max(1, (int) $this->input('page', 1));
 
+        $clients = $model->paginated($search, $page, self::PER_PAGE);
+
         $this->view('clients/index', [
-            'clients'    => $model->paginated($search, $page, self::PER_PAGE),
-            'totalCount' => $model->count($search),
-            'perPage'    => self::PER_PAGE,
-            'page'       => $page,
-            'search'     => $search,
+            'clients'      => $clients,
+            'pendingQuotes'=> $model->pendingQuotesByClient(array_column($clients, 'id')),
+            'totalCount'   => $model->count($search),
+            'perPage'      => self::PER_PAGE,
+            'page'         => $page,
+            'search'       => $search,
         ]);
     }
 
