@@ -17,7 +17,19 @@ function url(string $path = ''): string
 
 function asset(string $path): string
 {
-    return url('assets/' . ltrim($path, '/'));
+    $relative = ltrim($path, '/');
+    $url = url('assets/' . $relative);
+
+    // Cache-busting: este hosting sirve los archivos estáticos con un
+    // Cache-Control de 30 días, así que sin una versión en la URL el
+    // navegador seguiría usando la copia vieja de un CSS/JS/imagen tras
+    // cada despliegue hasta que el usuario force un refresh manual.
+    $file = (defined('PUBLIC_PATH') ? PUBLIC_PATH : '') . '/assets/' . $relative;
+    if (is_file($file)) {
+        $url .= '?v=' . filemtime($file);
+    }
+
+    return $url;
 }
 
 function e(?string $value): string
