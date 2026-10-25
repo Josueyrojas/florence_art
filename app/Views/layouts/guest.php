@@ -16,12 +16,17 @@
     .font-display { font-family: 'Playfair Display', 'Georgia', serif; }
 </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4"
+<?php $isPrivacyPage = trim((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') === 'privacidad'; ?>
+<body class="auth-body min-h-screen flex items-center justify-center p-4"
       style="background: radial-gradient(circle at 50% 15%, #1c1512 0%, #0d0a09 55%, #060505 100%);">
 
-<?php $isPrivacyPage = trim((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') === 'privacidad'; ?>
-<div class="w-full <?= $isPrivacyPage ? 'max-w-2xl' : 'max-w-sm' ?>">
-    <div class="text-center mb-8">
+<?php if (!$isPrivacyPage): ?>
+    <div class="auth-bg-photo" style="background-image: url('<?= asset('img/login-bg.jpg') ?>');"></div>
+    <div class="auth-bg-overlay"></div>
+<?php endif; ?>
+
+<div class="relative w-full <?= $isPrivacyPage ? 'max-w-2xl' : 'max-w-sm' ?>" style="z-index: 2;">
+    <div class="auth-logo-in text-center mb-8">
         <div class="mx-auto mb-5 h-24 w-24 rounded-full flex items-center justify-center overflow-hidden"
              style="background: radial-gradient(circle at 35% 30%, #1e1712, #0a0807 75%); border: 1px solid rgba(202,166,87,0.45); box-shadow: 0 0 0 1px rgba(202,166,87,0.12), 0 8px 30px rgba(0,0,0,0.6), inset 0 0 20px rgba(202,166,87,0.05);">
             <?php if (!empty($settings['logo_path'])): ?>
@@ -38,6 +43,7 @@
         </div>
         <h1 class="font-display text-3xl tracking-wide" style="color: #ecdfc0;"><?= e($settings['business_name']) ?></h1>
         <p class="text-[11px] uppercase mt-2" style="color: #a3895a; letter-spacing: 0.25em;">Control financiero</p>
+        <div class="mx-auto mt-4" style="width: 40px; height: 1px; background: linear-gradient(90deg, transparent, rgba(202,166,87,0.6), transparent);"></div>
     </div>
 
     <?php if ($msg = flash('success')): ?>
@@ -47,7 +53,9 @@
         <div class="flash-message mb-4 rounded-lg px-4 py-3 text-sm" style="background: rgba(139,29,45,0.15); border: 1px solid rgba(139,29,45,0.4); color: #e2a3ac;"><?= e($msg) ?></div>
     <?php endif; ?>
 
-    <?= $content ?>
+    <div class="auth-card-in">
+        <?= $content ?>
+    </div>
 
     <?php if ($settings['tagline']): ?>
     <p class="text-center text-[11px] mt-7 tracking-wide font-display italic" style="color: #6b5c44;">
