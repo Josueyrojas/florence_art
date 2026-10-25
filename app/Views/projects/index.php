@@ -1,5 +1,5 @@
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-    <h2 class="text-2xl font-semibold text-stone-800">Proyectos</h2>
+    <h2 class="font-display text-2xl font-semibold text-stone-800">Proyectos</h2>
     <div class="flex gap-2">
         <a href="<?= url('projects/export.csv') ?>" class="text-sm text-stone-600 border border-stone-300 rounded-lg px-4 py-2 hover:bg-stone-50 text-center">Exportar CSV</a>
         <a href="<?= url('projects/create') ?>" class="bg-amber-600 hover:bg-amber-700 text-white text-sm px-4 py-2 rounded-lg text-center">+ Nuevo proyecto</a>

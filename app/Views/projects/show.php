@@ -1,6 +1,6 @@
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
     <div>
-        <h2 class="text-2xl font-semibold text-stone-800"><?= e($project['name']) ?></h2>
+        <h2 class="font-display text-2xl font-semibold text-stone-800"><?= e($project['name']) ?></h2>
         <p class="text-sm text-stone-500"><?= e($project['client_name']) ?> · <span class="capitalize"><?= e(str_replace('_', ' ', $project['status'])) ?></span></p>
     </div>
     <div class="flex flex-wrap gap-2">

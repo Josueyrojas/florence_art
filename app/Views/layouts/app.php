@@ -6,8 +6,12 @@
 <meta name="theme-color" content="#ffffff">
 <title><?= e($settings['business_name']) ?> — Control Financiero</title>
 <link rel="icon" href="<?= !empty($settings['logo_path']) ? url($settings['logo_path']) : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23d97706'/%3E%3Ctext x='50' y='71' font-size='58' font-family='Georgia,serif' fill='white' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E" ?>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= asset('css/tailwind.css') ?>">
 <link rel="stylesheet" href="<?= asset('css/app.css') ?>">
+<style>.font-display { font-family: 'Playfair Display', 'Georgia', serif; }</style>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="bg-stone-100 text-stone-800" x-data="{ sidebarOpen: false }">
@@ -15,11 +19,13 @@
 <div class="flex min-h-screen">
     <!-- Sidebar -->
     <aside
-        class="fixed inset-y-0 left-0 z-30 w-64 bg-stone-900 text-stone-100 transform md:translate-x-0 md:static md:inset-auto flex flex-col"
-        style="transition: transform 280ms var(--ease-drawer); padding-top: env(safe-area-inset-top);"
+        class="fixed inset-y-0 left-0 z-30 w-64 text-stone-100 transform md:translate-x-0 md:static md:inset-auto flex flex-col"
+        style="transition: transform 280ms var(--ease-drawer); padding-top: env(safe-area-inset-top);
+               background: linear-gradient(180deg, #1c1512 0%, #15100d 55%, #110d0a 100%);
+               border-right: 1px solid rgba(202,166,87,0.14);"
         :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
     >
-        <div class="px-6 py-5 border-b border-stone-700 flex items-center gap-3">
+        <div class="px-6 py-5 border-b flex items-center gap-3" style="border-color: rgba(202,166,87,0.14);">
             <?php if (!empty($settings['logo_path'])): ?>
                 <img src="<?= url($settings['logo_path']) ?>" alt="<?= e($settings['business_name']) ?>" class="h-10 w-10 rounded-full object-cover border border-stone-700 flex-shrink-0">
             <?php else: ?>
@@ -32,8 +38,8 @@
                 </div>
             <?php endif; ?>
             <div class="min-w-0">
-                <h1 class="text-lg font-semibold tracking-wide truncate"><?= e($settings['business_name']) ?></h1>
-                <p class="text-xs text-stone-400 truncate"><?= e($settings['tagline']) ?></p>
+                <h1 class="font-display text-lg font-semibold tracking-wide truncate"><?= e($settings['business_name']) ?></h1>
+                <p class="text-xs truncate" style="color: #a3895a;"><?= e($settings['tagline']) ?></p>
             </div>
         </div>
         <nav class="flex-1 px-3 py-4 space-y-1 text-sm">
@@ -54,16 +60,16 @@
                 $active = $match === '' ? ($current === '') : str_starts_with($current, $match);
             ?>
                 <a href="<?= url($path) ?>"
-                   class="block rounded-lg px-3 py-2 hover:bg-stone-800 <?= $active ? 'bg-stone-800 text-amber-400' : 'text-stone-200' ?>">
+                   class="block rounded-lg px-3 py-2 border-l-2 hover:bg-stone-800/60 <?= $active ? 'bg-stone-800/60 text-amber-400 border-amber-500' : 'text-stone-300 border-transparent' ?>">
                     <?= e($label) ?>
                 </a>
             <?php endforeach; ?>
         </nav>
-        <div class="px-3 py-4 border-t border-stone-700">
+        <div class="px-3 py-4 border-t" style="border-color: rgba(202,166,87,0.14);">
             <p class="text-xs text-stone-500 px-3 mb-2 truncate"><?= e($_SESSION['user_name'] ?? '') ?></p>
             <form method="POST" action="<?= url('logout') ?>">
                 <?= csrf_field() ?>
-                <button type="submit" class="w-full text-left rounded-lg px-3 py-2 text-sm text-stone-200 hover:bg-stone-800">
+                <button type="submit" class="w-full text-left rounded-lg px-3 py-2 text-sm text-stone-300 hover:bg-stone-800/60">
                     Cerrar sesión
                 </button>
             </form>
@@ -75,8 +81,8 @@
 
     <div class="flex-1 md:ml-0">
         <!-- Topbar -->
-        <header class="sticky top-0 z-20 flex items-center justify-between bg-white border-b border-stone-200 px-4 py-3 md:px-8"
-                style="padding-top: calc(0.75rem + env(safe-area-inset-top));">
+        <header class="sticky top-0 z-20 flex items-center justify-between bg-white px-4 py-3 md:px-8"
+                style="padding-top: calc(0.75rem + env(safe-area-inset-top)); border-bottom: 1px solid rgba(202,166,87,0.18);">
             <button class="md:hidden text-stone-600" @click="sidebarOpen = !sidebarOpen">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />

@@ -1,4 +1,4 @@
-<h2 class="text-2xl font-semibold text-stone-800 mb-6">Configuración del negocio</h2>
+<h2 class="font-display text-2xl font-semibold text-stone-800 mb-6">Configuración del negocio</h2>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 

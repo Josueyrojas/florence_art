@@ -1,4 +1,4 @@
-<h2 class="text-2xl font-semibold text-stone-800 mb-6">Gastos operativos</h2>
+<h2 class="font-display text-2xl font-semibold text-stone-800 mb-6">Gastos operativos</h2>
 
 <form method="POST" action="<?= url('operating-expenses') ?>" class="bg-white rounded-xl border border-stone-200 p-4 mb-6 grid grid-cols-1 sm:grid-cols-6 gap-3">
     <?= csrf_field() ?>

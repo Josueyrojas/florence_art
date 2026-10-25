@@ -1,4 +1,4 @@
-<h2 class="text-2xl font-semibold text-stone-800 mb-6">Editar proyecto</h2>
+<h2 class="font-display text-2xl font-semibold text-stone-800 mb-6">Editar proyecto</h2>
 
 <form method="POST" action="<?= url('projects/' . $project['id'] . '/update') ?>" class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 max-w-2xl space-y-4">
     <?= csrf_field() ?>

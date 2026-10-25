@@ -1,4 +1,4 @@
-<h2 class="text-2xl font-semibold text-stone-800 mb-6">Dashboard financiero</h2>
+<h2 class="font-display text-2xl font-semibold text-stone-800 mb-6">Dashboard financiero</h2>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-5">

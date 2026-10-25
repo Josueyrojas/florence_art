@@ -1,5 +1,5 @@
 <div class="flex items-center justify-between mb-6">
-    <h2 class="text-2xl font-semibold text-stone-800">Clientes</h2>
+    <h2 class="font-display text-2xl font-semibold text-stone-800">Clientes</h2>
     <a href="<?= url('clients/create') ?>" class="bg-amber-600 hover:bg-amber-700 text-white text-sm px-4 py-2 rounded-lg">+ Nuevo cliente</a>
 </div>
 

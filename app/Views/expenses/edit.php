@@ -1,4 +1,4 @@
-<h2 class="text-2xl font-semibold text-stone-800 mb-6">Editar gasto</h2>
+<h2 class="font-display text-2xl font-semibold text-stone-800 mb-6">Editar gasto</h2>
 
 <form method="POST" action="<?= url('expenses/' . $expense['id'] . '/update') ?>" class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 max-w-lg space-y-4">
     <?= csrf_field() ?>

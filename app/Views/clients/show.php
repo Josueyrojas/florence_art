@@ -1,6 +1,6 @@
 <div class="flex items-center justify-between mb-6">
     <div>
-        <h2 class="text-2xl font-semibold text-stone-800"><?= e($client['name']) ?></h2>
+        <h2 class="font-display text-2xl font-semibold text-stone-800"><?= e($client['name']) ?></h2>
         <p class="text-sm text-stone-500"><?= e($client['phone']) ?><?= $client['phone'] && $client['email'] ? ' · ' : '' ?><?= e($client['email']) ?></p>
     </div>
     <div class="flex gap-2">

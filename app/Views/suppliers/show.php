@@ -1,6 +1,6 @@
 <div class="flex items-center justify-between mb-6">
     <div>
-        <h2 class="text-2xl font-semibold text-stone-800"><?= e($supplier['name']) ?></h2>
+        <h2 class="font-display text-2xl font-semibold text-stone-800"><?= e($supplier['name']) ?></h2>
         <p class="text-sm text-stone-500"><?= e($supplier['contact_name']) ?></p>
     </div>
     <a href="<?= url('suppliers') ?>" class="text-sm text-stone-500 hover:underline">&larr; Volver</a>
